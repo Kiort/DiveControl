@@ -1,0 +1,7 @@
+<h1>This is our homepage</h1>
+
+{% if user.is_authenticated %}
+    <p>Vaše ime: {{ user.username }}</p>
+{% else %}
+    <p>Niste prijavljeni.</p>
+{% endif %}
