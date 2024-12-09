@@ -7,5 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('diveapp.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('register/', diveapp_view.register, name ='register')
+    path('accounts/', include('diveapp.urls')),
 ]
