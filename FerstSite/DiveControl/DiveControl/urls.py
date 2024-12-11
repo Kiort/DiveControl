@@ -8,4 +8,5 @@ urlpatterns = [
     path('', include('diveapp.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('diveapp.urls')),
+    
 ]

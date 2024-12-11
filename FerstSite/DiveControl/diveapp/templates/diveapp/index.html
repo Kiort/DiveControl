@@ -1,0 +1,10 @@
+<h1>This is our homepage</h1>
+<div class="button-container">
+    <a href="{% url 'register' %}" class="btn">Register</a>
+    <a href="{% url 'login' %}" class="btn">Login</a>
+</div>
+{% if user.is_authenticated %}
+    <p>Vaše ime: {{ user.username }}</p>
+{% else %}
+    <p>Niste prijavljeni.</p>
+{% endif %}
