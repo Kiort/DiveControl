@@ -5,7 +5,36 @@ from django.shortcuts import redirect
 from diveapp.models import *
 from django.views.generic import ListView
 from datetime import datetime
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Locacija
 
+def lokacije(request):
+    user = request.user
+    if hasattr(user, 'diver'):  # Проверяем, есть ли Diver
+        diver = user.diver
+    else:
+        diver = Diver.objects.create(user=user)  # Создаем Diver, если его нет
+    
+    sve_lokacije = Locacija.objects.all()
+    
+    if 'filter' in request.GET:
+        if request.GET['filter'] == 'moje':
+            sve_lokacije = sve_lokacije.filter(clanstvo=diver)
+        elif request.GET['filter'] == 'dostupne':
+            sve_lokacije = sve_lokacije.exclude(clanstvo=diver)
+
+    return render(request, 'lokacije.html', {'lokacije': sve_lokacije})
+
+def pridruzi_se(request, lokacija_id):
+    lokacija = get_object_or_404(Locacija, id=lokacija_id)
+    lokacija.clanstvo.add(request.user.diver)
+    return redirect('lokacije')
+
+
+def odjavi_se(request, lokacija_id):
+    lokacija = get_object_or_404(Locacija, id=lokacija_id)
+    lokacija.clanstvo.remove(request.user.diver)
+    return redirect('lokacije')
 
 def index(request):
     return render(request, 'diveapp/index.html')
@@ -40,8 +69,6 @@ class DiveclubList(ListView):
     model=DiveClub
 class lokacijaList(ListView):
     model=Locacija
-class DClist(ListView):
-    model=DC
 
 def sviobjekti(request):
      # Get date filters from the GET request (if provided)
@@ -59,7 +86,6 @@ def sviobjekti(request):
             vlasnik_club_list = VlasnikClub.objects.filter(stvoreno__range=[start_date, end_date])
             dive_club_list = DiveClub.objects.filter(stvoreno__range=[start_date, end_date])
             diver_list = Diver.objects.filter(stvoreno__range=[start_date, end_date])
-            dc_list = DC.objects.filter(stvoreno__range=[start_date, end_date])
             location_list = Locacija.objects.filter(stvoreno__range=[start_date, end_date])
         except ValueError:
             # If there's an error parsing the dates, return all objects
@@ -71,7 +97,6 @@ def sviobjekti(request):
         vlasnik_club_list = VlasnikClub.objects.all()
         dive_club_list = DiveClub.objects.all()
         diver_list = Diver.objects.all()
-        dc_list = DC.objects.all()
         location_list = Locacija.objects.all()
 
     # Return the rendered page with filtered or all objects
@@ -79,7 +104,6 @@ def sviobjekti(request):
         'vlasnik_club_list': vlasnik_club_list,
         'dive_club_list': dive_club_list,
         'diver_list': diver_list,
-        'dc_list': dc_list,
         'location_list': location_list,
         'start_date': start_date,
         'end_date': end_date,

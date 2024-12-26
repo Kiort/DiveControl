@@ -1,0 +1,41 @@
+<h1>Lokacije</h1>
+
+<div>
+    <a href="?filter=moje" class="btn">Moje lokacije</a>
+    <a href="?filter=dostupne" class="btn">Dostupne lokacije</a>
+    <a href="{% url 'lokacije' %}" class="btn">Sve lokacije</a>
+</div>
+
+{% for lokacija in lokacije %}
+    <div class="lokacija">
+        <h3>{{ lokacija.naziv }}</h3>
+        <p>Datum: {{ lokacija.stvoreno }}</p>
+        <p>Geopozicija: {{ lokacija.coordinate }}</p>
+        
+        {% if user.diver in lokacija.clanstvo.all %}
+            <a href="{% url 'odjavi_se' lokacija.id %}" class="btn">Odjavi se</a>
+        {% else %}
+            <a href="{% url 'pridruzi_se' lokacija.id %}" class="btn">Pridruži se</a>
+        {% endif %}
+    </div>
+{% endfor %}
+
+<style>
+    .lokacija {
+        border: 1px solid black;
+        margin: 20px;
+        padding: 15px;
+    }
+    .btn {
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
