@@ -1,9 +1,14 @@
 <h1>This is our homepage</h1>
-<div class="button-container">
-    <a href="{% url 'register' %}" class="btn">Register</a>
-    <a href="{% url 'login' %}" class="btn">Login</a>
-</div>
+
 {% if user.is_authenticated %}
+
+
+    <div class="button-container">
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </div>
     <p>Vaše ime: {{ user.username }}</p>
     <div class="container">
         <a href="{% url 'register' %}" class="btn">Stvori klub</a>
@@ -11,6 +16,10 @@
         <a href="{% url 'lokacije' %}" class="btn">Lokacije</a>
     </div>
 {% else %}
+    <div class="button-container">
+        <a href="{% url 'register' %}" class="btn">Register</a>
+        <a href="{% url 'login' %}" class="btn">Login</a>
+    </div>
     <p>Niste prijavljeni.</p>
 {% endif %}
 <style>

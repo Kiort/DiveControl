@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lokacije</title>
+</head>
+<body>
+    <h1>Popis Lokacija</h1>
+    
+    {% if lokacije %}
+        {% for lokacija in lokacije %}
+            <div>
+                <h2>{{ lokacija.naziv }}</h2>
+                <p>Koordinate: {{ lokacija.coordinate }}</p>
+                <p>Stvoreno: {{ lokacija.stvoreno }}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>Nema dostupnih lokacija.</p>
+    {% endif %}
+    
+    <a href="{% url 'index' %}">Povratak na početnu</a>
+</body>
+</html>

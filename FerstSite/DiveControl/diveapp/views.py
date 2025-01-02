@@ -25,6 +25,11 @@ def lokacije(request):
 
     return render(request, 'lokacije.html', {'lokacije': sve_lokacije})
 
+
+def lokacija_list(request):
+    lokacije = Locacija.objects.all()
+    return render(request, 'lokacija_list.html', {'lokacije_list': lokacije})
+
 def pridruzi_se(request, lokacija_id):
     lokacija = get_object_or_404(Locacija, id=lokacija_id)
     lokacija.clanstvo.add(request.user.diver)

@@ -39,3 +39,4 @@ class Locacija(models.Model):
     naziv = models.CharField(max_length=25)
     coordinate = models.CharField(max_length=100)
     stvoreno=models.DateTimeField(default=datetime.now)
+    divclub= models.ForeignKey(DiveClub, on_delete=models.CASCADE, default=None)

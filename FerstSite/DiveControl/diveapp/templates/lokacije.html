@@ -3,7 +3,8 @@
 <div>
     <a href="?filter=moje" class="btn">Moje lokacije</a>
     <a href="?filter=dostupne" class="btn">Dostupne lokacije</a>
-    <a href="{% url 'lokacije' %}" class="btn">Sve lokacije</a>
+    <a href="{% url 'lokacija_list' %}" class="btn">Sve lokacije</a>
+    <a href="{% url 'index' %}">Povratak na početnu</a>
 </div>
 
 {% for lokacija in lokacije %}
