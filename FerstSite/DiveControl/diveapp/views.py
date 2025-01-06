@@ -7,13 +7,33 @@ from django.views.generic import ListView
 from datetime import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Locacija
+from django.shortcuts import render, redirect
+from .forms import DiverProfileForm
+from django.contrib.auth.decorators import login_required
+
+
+
+
+def diver_profile(request):
+    diver, created = Diver.objects.get_or_create(user=request.user)  
+    
+    if request.method == 'POST':
+        form = DiverProfileForm(request.POST, instance=diver)
+        if form.is_valid():
+            form.save()
+            return redirect('index')  
+    else:
+        form = DiverProfileForm(instance=diver)
+    
+    return render(request, 'diveapp/diver_profile.html', {'form': form})
+
 
 def lokacije(request):
     user = request.user
-    if hasattr(user, 'diver'):  # Проверяем, есть ли Diver
+    if hasattr(user, 'diver'):  
         diver = user.diver
     else:
-        diver = Diver.objects.create(user=user)  # Создаем Diver, если его нет
+        diver = Diver.objects.create(user=user)  
     
     sve_lokacije = Locacija.objects.all()
     

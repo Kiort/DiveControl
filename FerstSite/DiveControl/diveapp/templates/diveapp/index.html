@@ -8,6 +8,7 @@
             {% csrf_token %}
             <button type="submit">Logout</button>
         </form>
+        <a href="{% url 'diver_profile' %}">Redaktiranje profila</a>
     </div>
     <p>Vaše ime: {{ user.username }}</p>
     <div class="container">
