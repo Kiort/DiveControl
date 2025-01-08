@@ -6,7 +6,7 @@
     <p>
 
     </p>
-    <!-- Date Range Filter Form -->
+    
     <form method="get">
         <label for="start_date">Start Date:</label>
         <input type="date" id="start_date" name="start_date" value="{{ start_date|date:'Y-m-d' }}">
@@ -17,7 +17,7 @@
         <button type="submit">Filter</button>
     </form>
 
-    <!-- VlasnikClub List -->
+   
     <h2>Vlasnik Clubs</h2>
     <ul>
         {% for vlasnik in vlasnik_club_list %}
@@ -27,7 +27,7 @@
         {% endfor %}
     </ul>
 
-    <!-- DiveClub List -->
+    
     <h2>Dive Clubs</h2>
     <ul>
         {% for dive in dive_club_list %}
@@ -37,7 +37,7 @@
         {% endfor %}
     </ul>
 
-    <!-- Diver List -->
+    
     <h2>Divers</h2>
     <ul>
         {% for diver in diver_list %}

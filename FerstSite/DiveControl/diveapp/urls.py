@@ -17,4 +17,8 @@ urlpatterns = [
     path('lokacije_list/', lokacija_list, name='lokacija_list'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('diver-profile/', diver_profile, name='diver_profile'),
+    path('lokacije/', views.lokacije_all, name='lokacije_all'),
+    path('prijava-klub/', views.prijava_klub, name='prijava_klub'),
+    path('pridruzi-se-klubu/<int:club_id>/', views.pridruzi_se_klubu, name='pridruzi_se_klubu'),  
+    path('izlaz-iz-kluba/<int:club_id>/', views.izlaz_klub, name='izlaz_klub'),
 ]

@@ -6,10 +6,11 @@ from diveapp.models import *
 from django.views.generic import ListView
 from datetime import datetime
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Locacija
+from .models import Locacija, DiveClub
 from django.shortcuts import render, redirect
 from .forms import DiverProfileForm
 from django.contrib.auth.decorators import login_required
+from django.utils.timezone import now
 
 
 
@@ -26,6 +27,65 @@ def diver_profile(request):
         form = DiverProfileForm(instance=diver)
     
     return render(request, 'diveapp/diver_profile.html', {'form': form})
+
+
+def pridruzi_se_klubu(request, club_id):
+    klub = get_object_or_404(DiveClub, id=club_id)
+    diver = request.user.diver
+    diver.clanstvo.add(klub)  
+    return redirect('prijava_klub')  
+
+def izlaz_klub(request, club_id):
+    klub = get_object_or_404(DiveClub, id=club_id)
+    diver = request.user.diver
+    diver.clanstvo.remove(klub)
+    return redirect('prijava_klub')
+
+def prijava_klub(request):
+    klubovi = DiveClub.objects.all()
+    diver = request.user.diver
+    
+    
+    query = request.GET.get('q')
+    if query:
+        klubovi = klubovi.filter(naziv__icontains=query)
+
+    
+    filter_option = request.GET.get('filter')
+    if filter_option == 'moji':
+        klubovi = klubovi.filter(id__in=diver.clanstvo.all())
+    elif filter_option == 'dostupni':
+        klubovi = klubovi.exclude(id__in=diver.clanstvo.all())
+
+    return render(request, 'prijava_klub.html', {'klubovi': klubovi})
+
+
+def lokacije_all(request):
+    lokacije = Locacija.objects.select_related('divclub').all()
+    diver = request.user.diver   # uzmemo tekućeg korisnika
+
+    
+    moji_klubovi = diver.clanstvo.all() # polje sa svim klubovima upišemo 
+
+    
+    od = request.GET.get('od')
+    do = request.GET.get('do')
+    if od and do:
+        lokacije = lokacije.filter(stvoreno__date__range=[od, do])
+
+   
+    filter_option = request.GET.get('filter')
+    if filter_option == 'moje':
+        
+        lokacije = lokacije.filter(divclub__in=moji_klubovi)
+    elif filter_option == 'dostupne':
+       
+        lokacije = lokacije.filter(divclub__in=moji_klubovi)
+
+    return render(request, 'diveapp/lokacije.html', {
+        'lokacije': lokacije,
+        'moji_klubovi': moji_klubovi
+    })
 
 
 def lokacije(request):

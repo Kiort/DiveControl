@@ -12,8 +12,8 @@
     </div>
     <p>Vaše ime: {{ user.username }}</p>
     <div class="container">
-        <a href="{% url 'register' %}" class="btn">Stvori klub</a>
-        <a href="{% url 'register' %}" class="btn">Prijavi se u klub</a>
+        <a href="{% url 'index' %}" class="btn">Stvori klub</a>
+        <a href="{% url 'prijava_klub' %}" class="btn">Prijavi se u klub</a>
         <a href="{% url 'lokacije' %}" class="btn">Lokacije</a>
     </div>
 {% else %}
