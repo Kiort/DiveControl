@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Diver Profile{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Dive Control</h1>
+        <nav>
+            <a href="{% url 'index' %}" class="btn">Povratak na početnu</a> |
+            <a href="{% url 'diver_profile' %}">Profile</a>
+        </nav>
+    </header>
+    
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Dive Control</p>
+    </footer>
+</body>
+</html>

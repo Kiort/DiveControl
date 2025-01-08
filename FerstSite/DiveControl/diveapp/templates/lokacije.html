@@ -1,0 +1,54 @@
+<h1>Lokacije</h1>
+
+
+<form method="GET" action="">
+    <label for="od">Od:</label>
+    <input type="date" name="od" value="{{ request.GET.od }}">
+    
+    <label for="do">Do:</label>
+    <input type="date" name="do" value="{{ request.GET.do }}">
+    
+    <button type="submit" class="btn">Filtriraj</button>
+</form>
+
+
+<div>
+    <a href="?filter=moje" class="btn">Moje lokacije</a>
+    <a href="?filter=dostupne" class="btn">Dostupne lokacije</a>
+    <a href="{% url 'lokacije_all' %}" class="btn">Prikaži sve</a>
+    <a href="{% url 'index' %}" class="btn">Povratak na početnu</a>
+</div>
+
+{% for lokacija in lokacije %}
+    <div class="lokacija">  
+        <h3>{{ lokacija.naziv }}</h3>
+        <p>Datum: {{ lokacija.stvoreno|date:"d.m.Y" }}</p>
+        <p>Geopozicija: {{ lokacija.coordinate }}</p>
+        
+        {% if user.diver in lokacija.divclub.clanstvo.all %}
+            <a href="{% url 'odjavi_se' lokacija.id %}" class="btn">Odjavi se</a>
+        {% else %}
+            <a href="{% url 'prijava_klub' %}" class="btn">Prijavi se u klub</a>
+        {% endif %}
+    </div>
+{% endfor %}
+
+<style>
+    .lokacija {
+        border: 1px solid black;
+        margin: 20px;
+        padding: 15px;   
+    }
+    .btn {
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>

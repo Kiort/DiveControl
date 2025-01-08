@@ -1,0 +1,32 @@
+<h1>Prijava u Klub</h1>
+
+<form method="GET" action="">
+    <input type="text" name="q" placeholder="Pretraži klubove" value="{{ request.GET.q }}">
+    <button type="submit">Pretraži</button>
+</form>
+
+<div>
+    <a href="?filter=moji" class="btn">Moji klubovi</a>
+    <a href="?filter=dostupni" class="btn">Dostupni klubovi</a>
+    <a href="{% url 'prijava_klub' %}" class="btn">Prikaži sve</a>
+</div>
+
+{% for klub in klubovi %}
+    <div class="lokacija">
+        <h3>{{ klub.naziv }}</h3>
+        
+        {% if klub in moji_klubovi %}
+            <form method="POST" action="{% url 'izlaz_klub' klub.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn" style="background-color: red;">Izlaz iz kluba</button>
+            </form>
+        {% else %}
+            <form method="POST" action="{% url 'pridruzi_se_klubu' klub.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn">Pridruži se</button>
+            </form>
+        {% endif %}
+    </div>
+{% empty %}
+    <p>Nema dostupnih klubova.</p>
+{% endfor %}

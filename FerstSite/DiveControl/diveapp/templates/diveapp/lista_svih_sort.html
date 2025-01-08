@@ -1,0 +1,60 @@
+<h1>Svi objekti</h1>
+<a href="javascript:history.back()">
+    <button>Back to Previous Page</button>
+</a>
+
+    <p>
+
+    </p>
+    
+    <form method="get">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ start_date|date:'Y-m-d' }}">
+        
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" value="{{ end_date|date:'Y-m-d' }}">
+        
+        <button type="submit">Filter</button>
+    </form>
+
+   
+    <h2>Vlasnik Clubs</h2>
+    <ul>
+        {% for vlasnik in vlasnik_club_list %}
+            <li>{{ vlasnik.ime }} {{ vlasnik.prezime }} - OIB: {{ vlasnik.oib }}</li>
+        {% empty %}
+            <li>No Vlasnik Clubs available.</li>
+        {% endfor %}
+    </ul>
+
+    
+    <h2>Dive Clubs</h2>
+    <ul>
+        {% for dive in dive_club_list %}
+            <li>{{ dive.naziv }} - Matični Broj: {{ dive.maticni_broj }} (Owner: {{ dive.vlasnik.ime }} {{ dive.vlasnik.prezime }})</li>
+        {% empty %}
+            <li>No Dive Clubs available.</li>
+        {% endfor %}
+    </ul>
+
+    
+    <h2>Divers</h2>
+    <ul>
+        {% for diver in diver_list %}
+            <li>{{ diver.ime }} {{ diver.prezime }} - OIB: {{ diver.oib }}</li>
+        {% empty %}
+            <li>No Divers available.</li>
+        {% endfor %}
+    </ul>
+
+  
+
+    <!-- Locations List -->
+    <h2>Locations</h2>
+    <ul>
+        {% for location in location_list %}
+            <li>{{ location.naziv }} - Coordinates: {{ location.coordinate }}</li>
+        {% empty %}
+            <li>No Locations available.</li>
+        {% endfor %}
+    </ul>

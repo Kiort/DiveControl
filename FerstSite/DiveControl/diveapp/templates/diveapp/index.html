@@ -1,0 +1,49 @@
+<h1>This is our homepage</h1>
+
+{% if user.is_authenticated %}
+
+
+    <div class="button-container">
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        <a href="{% url 'diver_profile' %}">Redaktiranje profila</a>
+    </div>
+    <p>Vaše ime: {{ user.username }}</p>
+    <div class="container">
+        <a href="{% url 'index' %}" class="btn">Stvori klub</a>
+        <a href="{% url 'prijava_klub' %}" class="btn">Prijavi se u klub</a>
+        <a href="{% url 'lokacije' %}" class="btn">Lokacije</a>
+    </div>
+{% else %}
+    <div class="button-container">
+        <a href="{% url 'register' %}" class="btn">Register</a>
+        <a href="{% url 'login' %}" class="btn">Login</a>
+    </div>
+    <p>Niste prijavljeni.</p>
+{% endif %}
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .btn {
+        margin: 10px;
+        padding: 15px 30px;
+        font-size: 18px;
+        color: white;
+        background-color: #007BFF;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        width: 200px;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
