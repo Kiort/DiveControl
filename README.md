@@ -7,7 +7,7 @@ Funkcionalnosti:
 - Upravljanje podacima o roniocima (osobni podaci, povijest ronjenja, broj dozvole).
 - Upravljanje klubovima i njihovim članovima.
 - Registracija i praćenje lokacija za ronjenje.
-- Vođenje izvještaja o ronjenjima, uključujući datum, vrijeme i geolokaciju.
+- Vođenje izvještaja o događajima ronjenja, uključujući datum, vrijeme i geolokaciju.
 
 Tehnologije:
 - Backend: Python (Django)
